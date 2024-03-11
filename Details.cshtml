@@ -1,0 +1,76 @@
+﻿@model List<RegistrationInfo>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<header>
+    <div class="header-right">
+        <a href="@Url.Action("Logout", "Logout")">Logout</a>
+    </div>
+</header>
+<br />
+<style>
+    h1 {
+        font-size: 36px;
+        color: #007bff;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .header-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 20px;
+    }
+    body {
+        background: linear-gradient(to bottom, #F0F8FF, #C0C0C0);
+    }
+    td.align{
+        text-align: center;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px; /* Add margin below the table */
+
+    
+</style>
+
+<body>
+    <center><h1>Students Registered for @ViewBag.courseName</h1></center>
+    <br />
+    <div>
+    <table class="table">
+            <tr>
+            <th>Registration ID</th>
+            <th>Student ID</th>
+            <th>Date Registered</th>
+            <!-- Add other course details as needed -->
+        </tr>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.RegistrationID</td>
+                <td>@course.StudentID</td>
+                <td>@course.DateRegistered</td>
+                <!-- Add other course details as needed -->
+            </tr>
+        }
+    </table>
+    </div>
+</body>
+
+
+
+
+
+
+
+    

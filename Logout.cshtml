@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Success";
+}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+                font-family: Arial, sans-serif;
+                background-color: #f5f5f5;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 36px;
+                color: #007bff;
+                text-align: center;
+                margin-top: 50px;
+            }
+    </style>
+</head>
+<body>
+    <center><h1>&#10004; Logged Out!</h1></center>
+
+    <div>
+        <center><p>Login back <a href="@Url.Action("Login", "UserInfo")">here</a></p></center>
+    </div>
+</body>
+

@@ -1,0 +1,159 @@
+﻿@{
+    ViewData["Title"] = "Courses-";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif; /* Set default font family */
+            background-color: #f4f4f4; /* Set background color */
+            color: #333; /* Set default text color */
+            margin: 0; 
+            padding: 0; 
+        }
+
+        .container {
+            max-width: 800px; /* Set maximum width for the container */
+            margin: 0 auto; /* Center align the container */
+            padding: 20px; /* Add padding to the container */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px; /* Add margin below the table */
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 10px; /* Increase padding for better readability */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .link-box {
+            border: 2px solid #007bff; /* Add border */
+            padding: 15px 20px; /* Add padding */
+            width: fit-content; /* Make the box size fit the content */
+            display: inline-block; /* Display the box as an inline block */
+            text-align: center; /* Center the text horizontally */
+            background-color: #fff; /* Set background color */
+            color: #007bff; /* Set text color */
+            border-radius: 5px; /* Add border radius */
+            text-decoration: none; /* Remove underline from links */
+            transition: all 0.3s ease; /* Add transition effect */
+        }
+
+        .link-box:hover {
+                background-color: #007bff; /* Change background color on hover */
+                color: #fff; /* Change text color on hover */
+        }
+
+        .header-right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0 20px;
+
+            td.registration-count{
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header style="background: linear-gradient(to right, #2c3e50, #3498db); color: #fff; text-align: center; padding-top: 15px;">
+       
+        <div class="header-right">
+            <span class="menu-item">
+                <a href="@Url.Action("RegisteredCourses", "RegistrationInfo", new { ID = ViewBag.SID })" style="color: black">My Courses</a>
+            </span>
+            <span class="menu-separator", style="color: black"> | </span>
+            <span class="menu-item">
+                <a href="@Url.Action("Logout", "Logout")" style="color: black">Logout</a>
+            </span>
+        </div>
+        <br />
+        @if (ViewBag.IsAdmin && ViewBag.Registrations != null)
+        {
+
+            <h1>Welcome Admin</h1>
+        }
+        else
+        {
+            <center><h1>Courses Offered</h1></center>
+        }  
+        <br />
+        
+
+    </header>
+
+    <div class="container">
+        <div id="grid1">
+            @if (ViewBag.IsAdmin && ViewBag.Registrations!=null)
+            {
+                <h2>Course Information</h2>
+                <table>
+                    <tr>
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Description</th>
+                        <th>Total Registrations</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.CourseID</td>
+                            <td>@item.CourseName</td>
+                            <td>@item.Description</td>
+                            <td class="registration-count">
+                                @if (ViewBag.Registrations.ContainsKey(item.CourseID))
+                                {
+                                    var count = ViewBag.Registrations[item.CourseID];
+                                    <center><a href="@Url.Action("Details", "RegistrationInfo", new { id = item.CourseID })">@count</a></center>
+                                }
+                                else
+                                {
+                                    <span>0</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <table>
+                    <tr>
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Description</th>
+                    </tr>
+                    @foreach (var course in Model)
+                    {
+                        <tr>
+                            <td>@course.CourseID</td>
+                            <td>@course.CourseName</td>
+                            <td>@course.Description</td>
+                        </tr>
+                    }
+                </table>
+
+                <div id="grid3">
+                    <a class="link-box" href="@Url.Action("Register", "CourseInfo", new{sid=ViewBag.SID})">Click to register for a course</a>
+                </div>
+            }
+            
+        </div>
+        
+        
+    </div>
+</body>
+</html>

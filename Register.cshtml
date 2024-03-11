@@ -1,0 +1,55 @@
+﻿@model List<CourseInfo>
+@{
+    ViewData["Title"] = "Register- ";
+}
+
+<br />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h2 style="color: #333; text-align: center; margin-top: 20px;">Register for Courses</h2>
+
+<style>
+    .header-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 20px;
+    }
+
+    body {
+        background: linear-gradient(to bottom, #F0F8FF, #C0C0C0);
+    }
+
+</style>
+<header>
+    <div class="header-right">
+        <a href="@Url.Action("Logout", "Logout")">Logout</a>
+    </div>
+</header>
+@using (Html.BeginForm("ViewCourses", "RegistrationInfo", FormMethod.Post))
+{
+    @Html.AntiForgeryToken();
+    
+    <input type="hidden" name="StdId" value="@ViewBag.StdId" />
+    <div class="form-group">
+        <label for="courseId">Select Course:</label>
+        <select class="form-control" id="courseId" name="courseId">
+            @foreach (var course in Model)
+            {
+                <option value="@course.CourseID">@course.CourseName</option>
+            }
+        </select>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Register</button>
+    } 
+    <br />
+    <br />
+    <span title="Registration is limited to three courses, and each course can only be registered for once" style="border-bottom: 1px dotted #000;">Hover me for more info!</span>
+</body>
+
+
+

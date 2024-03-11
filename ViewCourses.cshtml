@@ -1,0 +1,132 @@
+﻿@model List<RegistrationInfo>
+
+@{
+    ViewData["Title"] = "Details";
+}
+<style>
+    .link-box {
+        border: 2px solid #007bff; /* Add border */
+        padding: 15px 20px; /* Add padding */
+        width: fit-content; /* Make the box size fit the content */
+        display: inline-block; /* Display the box as an inline block */
+        text-align: center; /* Center the text horizontally */
+        background-color: #fff; /* Set background color */
+        color: #007bff; /* Set text color */
+        border-radius: 5px; /* Add border radius */
+        text-decoration: none; /* Remove underline from links */
+        transition: all 0.3s ease; /* Add transition effect */
+    }
+
+        .link-box:hover {
+            background-color: #007bff; /* Change background color on hover */
+            color: #fff; /* Change text color on hover */
+        }
+
+    body {
+        background: linear-gradient(to bottom, #F0F8FF, #C0C0C0);
+    }
+
+    .header-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 20px;
+    }
+
+    .p {
+        font-size: 18px;
+        color: red;
+        background-color: #f4f4f4;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 36px;
+        color: green;
+        text-align: center;
+        margin-top: 50px;
+    }
+</style>
+    <header>
+        <div class="header-right">
+            <a href="@Url.Action("Logout", "Logout")">Logout</a>
+        </div>
+    </header>
+<body>
+    @if (ViewBag.Error!=null)
+    {
+        @if (ViewBag.Error == "StudentCoursesLimit")
+        {
+            <br />
+            <center><p>&#9888;You have already registered for the maximum allowed number of courses (3).
+                Please Logout!!!!
+            </p></center>
+        }
+        else if (ViewBag.Error == "CourseCapacityReached")
+        {
+            <br />
+            <center><p>&#9888;The selected course has reached its maximum capacity.</p></center>
+                <div>
+                    <center><a href="@Url.Action("Register", "CourseInfo", new{sid=ViewBag.ID})">Choose a Different Course</a></center>
+                </div>
+        }
+        else if (ViewBag.Error == "AlreadyRegistered")
+        {
+            <br />
+        <center><p>&#9888;You have already registered for this course.</p></center>
+            <div>
+                <center><a href="@Url.Action("Register", "CourseInfo", new{sid=ViewBag.ID})">Choose a Different Course</a></center>
+            </div>
+        }
+}
+
+    else
+    {
+        <br />
+        <center><h2>&#10004; Wohooo.. Registration for @ViewBag.courseName Completed Successfully! </h2></center>
+        <br />
+        <div>
+            @if (Model.Any())
+            {
+                <br />
+                <h4>Courses Registered for @ViewBag.StudentName</h4>
+            }
+            else
+            {
+                <h4>No Courses Registered</h4>
+            }
+            <hr />
+            <table class="table">
+                <tr>
+                    <th>Registration ID</th>
+                    <th>Course ID</th>
+                    <th>Date Registered</th>
+                </tr>
+                @foreach (var course in Model)
+                {
+                    <tr>
+                        <td>@course.RegistrationID</td>
+                        <td>@course.CourseID</td>
+                        <td>@course.DateRegistered.ToString("yyyy-MM-dd")</td>
+                    </tr>
+                }
+            </table>
+
+            <br />
+            <div>
+                <center><a class="link-box" href="@Url.Action("Register", "CourseInfo", new{sid=ViewBag.ID})">Add more courses</a></center>
+            </div>
+        </div>
+    }
+</body>
+
+
+
+
+
+
+
+
